@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">InstaFeed</string>
+    <string name="hello_word">Hello World!</string>
+    <string name="input_the_text_and_click_the_button_to_see_the_result">Input the text and click the button to see the result.</string>
+
+    <string name="title_activity_login">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_text">LOGIN</string>
+    <string name="sign_up_text">Sign Up!!! To get most out of it.</string>
+
+
+</resources>

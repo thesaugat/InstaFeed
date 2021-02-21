@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_component_margin">20dp</dimen>
+    <dimen name="default_component_margin_sm">5dp</dimen>
+    <dimen name="text_size_medium">22sp</dimen>
+
+    <dimen name="inner_frame_layout_padding">5dp</dimen>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="margin_large">20dp</dimen>
+    <dimen name="margin_medium_small">12dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_extra_small">6dp</dimen>
+    <dimen name="card_border_radius">16dp</dimen>
+
+    <color name="pink">#FC4253</color>
+    <color name="red">#E91E63</color>
+    <color name="grey">#D3CBD0</color>
+    <color name="facebook_color">#4D70B1</color>
+</resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/default_component_margin"
+    android:layout_marginRight="@dimen/default_component_margin"
+    android:orientation="vertical"
+    tools:context=".ui.activities.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_component_margin"
+        android:text="@string/hello_word"
+        android:textColor="@color/text_color_primary"
+        android:textSize="28sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_component_margin_sm"
+        android:text="@string/input_the_text_and_click_the_button_to_see_the_result"
+        android:textColor="@color/text_color_seconday"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/inputET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_component_margin"
+        android:hint="Type Here" />
+
+
+    <Button
+
+        android:id="@+id/inputBTN"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="@dimen/default_component_margin_sm"
+        android:backgroundTint="@color/text_color_primary"
+        android:text="print" />
+
+    <TextView
+        android:id="@+id/outputTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_component_margin"
+        android:textSize="@dimen/text_size_medium" />
+</LinearLayout>
