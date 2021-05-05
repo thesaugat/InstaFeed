@@ -65,6 +65,8 @@ public class AddPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
         postIV = findViewById(R.id.postIV);
+        
+
         etDesc = findViewById(R.id.etDesc);
         postTV = findViewById(R.id.postTV);
         loadingProgress = findViewById(R.id.loadingProgress);

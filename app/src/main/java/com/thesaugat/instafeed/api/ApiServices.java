@@ -14,6 +14,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Url;
 
 public interface ApiServices {
 
@@ -22,8 +23,9 @@ public interface ApiServices {
     Call<LoginResponse> login(@Field("email") String email, @Field("password") String password);
 
     @FormUrlEncoded
-    @POST("/api/v1/register")
-    Call<ServerResponse> signup(@Field("name") String name, @Field("email") String email, @Field("password") String password);
+    @POST
+    Call<ServerResponse> register(@Field("name") String name, @Field("email") String email, @Field("password") String password);
+
 
     @FormUrlEncoded
     @POST("/api/v1/post-feed")

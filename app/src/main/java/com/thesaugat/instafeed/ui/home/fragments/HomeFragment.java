@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.thesaugat.instafeed.R;
+import com.thesaugat.instafeed.adapters.StoryAdapter;
+import com.thesaugat.instafeed.dataHolder.StoryData;
 import com.thesaugat.instafeed.ui.userAccount.UserAccountActivity;
 import com.thesaugat.instafeed.adapters.InstagramAdapter;
 import com.thesaugat.instafeed.pojo.Feed;
@@ -35,7 +37,7 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements InstagramAdapter.ClickListeners {
 
-    RecyclerView feedRv;
+    RecyclerView feedRv, storyRV;
     List<Feed> instagramFeedList;
     InstagramAdapter instagramAdapter;
 
@@ -52,8 +54,29 @@ public class HomeFragment extends Fragment implements InstagramAdapter.ClickList
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         instagramFeedList = new ArrayList<>();
         feedRv = v.findViewById(R.id.feedRV);
+        storyRV = v.findViewById(R.id.storyRV);
+        seedStoryData();
         servercall();
         return v;
+    }
+
+    private void seedStoryData() {
+        List<StoryData> storyDataList = new ArrayList<>();
+        storyDataList.add(new StoryData(1, false, "thesaugat", "https://raahar.com/public_pics/2.jpeg", "", null));
+        storyDataList.add(new StoryData(2, false, "roshma", "https://raahar.com/public_pics/3.jpeg", "", null));
+        storyDataList.add(new StoryData(3, false, "Jenith", "https://raahar.com/public_pics/4.jpeg", "", null));
+        storyDataList.add(new StoryData(4, false, "William", "https://raahar.com/public_pics/5.jpeg", "", null));
+        storyDataList.add(new StoryData(5, false, "Ram", "https://raahar.com/public_pics/6.jpeg", "", null));
+
+        setStoryRV(storyDataList);
+
+    }
+
+    private void setStoryRV(List<StoryData> storyDataList) {
+        StoryAdapter adapter = new StoryAdapter(storyDataList, LayoutInflater.from(getContext()), getContext());
+        storyRV.hasFixedSize();
+        storyRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        storyRV.setAdapter(adapter);
     }
 
     @Override
@@ -130,6 +153,7 @@ public class HomeFragment extends Fragment implements InstagramAdapter.ClickList
                     if (response.isSuccessful()) {
                         if (!response.body().getError()) {
                             instagramAdapter.toggleFollow(position, follow);
+
 
                         }
                     }

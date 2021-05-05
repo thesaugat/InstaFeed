@@ -1,66 +1,106 @@
 package com.thesaugat.instafeed.ui.home.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.thesaugat.instafeed.R;
+import com.thesaugat.instafeed.adapters.ProfileFeedAdapter;
+import com.thesaugat.instafeed.pojo.Feed;
+import com.thesaugat.instafeed.pojo.FeedData;
+import com.thesaugat.instafeed.ui.activities.PostViewerActivity;
+import com.thesaugat.instafeed.utils.APIClient;
+import com.thesaugat.instafeed.utils.Constants;
+import com.thesaugat.instafeed.utils.SharedPreferencesUtils;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ProfileFragment extends Fragment {
+import java.util.List;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import retrofit2.Call;
+import retrofit2.Callback;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+public class ProfileFragment extends Fragment implements ProfileFeedAdapter.OnProfileClickLister {
+    RecyclerView feedRv;
+    public static String FEED_KEY = "sdf";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        feedRv = view.findViewById(R.id.profileFeedRV);
+
+        return view;
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getDataFromServer();
+
+    }
+
+    public void getDataFromServer() {
+        String token = SharedPreferencesUtils.getStringPreference(getContext(), Constants.TOKEN_KEY);
+        if (token != null) {
+            Call<FeedData> feedDataCall = APIClient.getClient().getMyFeed(token);
+            feedDataCall.enqueue(new Callback<FeedData>() {
+                @Override
+                public void onResponse(Call<FeedData> call, retrofit2.Response<FeedData> response) {
+                    if (response.isSuccessful()) {
+                        if (!response.body().getError()) {
+                            setRecyclerView(response.body().getFeed());
+
+                        }
+
+                    } else {
+                        Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<FeedData> call, Throwable t) {
+
+                }
+            });
+        } else {
+            Toast.makeText(getContext(), "Please Login Again", Toast.LENGTH_SHORT).show();
+            SharedPreferencesUtils.setBooleanPreference(getContext(), Constants.IS_LOGGED, false);
+        }
+
+    }
+
+    public void setRecyclerView(List<Feed> feedList) {
+        feedRv.setHasFixedSize(true);
+        feedRv.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        ProfileFeedAdapter feedAdapter = new ProfileFeedAdapter(feedList, LayoutInflater.from(getContext()));
+        feedAdapter.setOnProfileClickListner(this);
+        feedRv.setAdapter(feedAdapter);
+    }
+
+    @Override
+    public void onItemClick(Feed feed, int postion) {
+        Intent intent = new Intent(getContext(), PostViewerActivity.class);
+        intent.putExtra(FEED_KEY, feed);
+        getActivity().startActivity(intent);
+
     }
 }

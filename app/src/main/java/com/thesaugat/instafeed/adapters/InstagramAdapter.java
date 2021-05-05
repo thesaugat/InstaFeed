@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import com.thesaugat.instafeed.R;
 import com.thesaugat.instafeed.pojo.Feed;
+import com.thesaugat.instafeed.utils.DateTimeSimplify;
 
 import java.util.List;
 
@@ -39,11 +40,12 @@ public class InstagramAdapter extends RecyclerView.Adapter<InstagramAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.name.setText(instagramFeedList.get(position).getUserName());
-        holder.time.setText(instagramFeedList.get(position).getTime());
+        holder.time.setText(DateTimeSimplify.convertNumbers(instagramFeedList.get(position).getTime()));
         holder.viewsCount.setText("22");
         holder.heartsCount.setText("221");
         holder.commentCount.setText("1212");
         holder.description.setText(instagramFeedList.get(position).getPostDesc());
+
         Picasso.get().load(instagramFeedList.get(position).getProfileImage()).into(holder.profilePic);
         Picasso.get().load(instagramFeedList.get(position).getPostImage()).into(holder.imageBody);
         if (!instagramFeedList.get(position).getFollowing()) {
